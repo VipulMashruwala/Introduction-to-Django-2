@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Awesome Diary</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <a href="/auth" class="btn btn-light">Log Out</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Display Data Here -->
+
+    {% if message is not None %}
+        <script> alert('{{ message }}') </script>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+            </tr>
+            </thead>
+
+            {% for i in data %}
+                <tbody>
+                    <tr>
+                    <th scope="row">{{ i.user_id }}</th>
+                    <td>{{ i.user_name }}</td>
+                    <td>{{ i.user_address }}</td>
+                    <td>{{ i.user_phone }}</td>
+                    <td>
+                        <form action="deleteData" method="POST"> {% csrf_token %}
+                            <input name="user_id" type="hidden" value= '{{ i.user_id }}'>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    
+                    </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <script> alert('No data') </script>
+
+    {% endif %}
+
+
+    <!-- Add  Data into database -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card" style="width: 18rem; margin: auto;">
+                    <div class="card-body">
+
+                        <form action="addData" method="post"> {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">User Name</span>
+                                <input name="user_name" type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+                                <input name="user_address" type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                                <input name="user_phone" type="text" class="form-control" aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <button type="submit" class="btn btn-success">Add</button>
+                        </form>
+                        
+                    </div>
+                  </div>
+            
+            </div>
+
+            <div class="col-sm-6">
+                
+        <div class="card" style="width: 18rem; margin: auto;">
+
+
+        <!-- update data into database -->
+
+
+        <div class="card-body">
+            <form action="updateData" method="POST"> {% csrf_token %}
+            
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">User Id</span>
+                    <input name="user_id" type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">User Name</span>
+                    <input name="user_name" type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+                    <input name="user_address" type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Phone</span>
+                    <input name="user_phone" type="text" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-default">
+                </div>
+            
+                <button type="submit" class="btn btn-primary align-items-center">Update</button>
+            </form> 
+        </div>
+      </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
